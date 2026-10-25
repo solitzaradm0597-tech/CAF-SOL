@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aroma & Sabor - Cafetería Artesanal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cafe-oscuro': '#3D2314', // Café Oscuro Principal
+                        'cafe-medio': '#5C3A21',  // Café Secundario
+                        'cafe-claro': '#D7C4B7',  // Café Claro Accent
+                        'crema': '#F9F6F0',       // Blanco Crema / Fondo
+                        'crema-suave': '#EFE9E1', // Variación Crema
+                    },
+                    fontFamily: {
+                        'serif': ['"Playfair Display"', 'serif'],
+                        'sans': ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F9F6F0;
+            color: #3D2314;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F9F6F0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #5C3A21;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3D2314;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen relative">
+
+    <!-- NAVBAR -->
+    <header class="sticky top-0 z-50 bg-cafe-oscuro text-white shadow-lg transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('inicio')">
+                    <div class="w-10 h-10 rounded-full bg-cafe-claro flex items-center justify-center text-cafe-oscuro text-xl shadow-inner">
+                        <i class="fa-solid font-bold fa-coffee"></i>
+                    </div>
+                    <span class="font-serif text-2xl font-bold tracking-wide text-crema">Sweet Life</span>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <button onclick="navigateTo('inicio')" id="nav-inicio" class="nav-link text-crema hover:text-cafe-claro transition font-medium text-lg pb-1 border-b-2 border-transparent">Inicio</button>
+                    <button onclick="navigateTo('productos')" id="nav-productos" class="nav-link text-crema hover:text-cafe-claro transition font-medium text-lg pb-1 border-b-2 border-transparent">Productos</button>
+                    <button onclick="navigateTo('contacto')" id="nav-contacto" class="nav-link text-crema hover:text-cafe-claro transition font-medium text-lg pb-1 border-b-2 border-transparent">Contacto</button>
+                </nav>
+
+                <!-- Actions: Cart & Mobile Menu Toggle -->
+                <div class="flex items-center gap-4">
+                    <!-- Cart Button -->
+                    <button onclick="toggleCart()" class="relative p-2.5 bg-cafe-medio hover:bg-cafe-claro hover:text-cafe-oscuro rounded-full transition text-white" aria-label="Carrito">
+                        <i class="fa-solid fa-bag-shopping text-lg"></i>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-red-800 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-cafe-oscuro hidden">0</span>
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-crema hover:text-cafe-claro focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cafe-medio border-t border-cafe-oscuro/20 px-4 pt-3 pb-6 space-y-3">
+            <button onclick="navigateTo('inicio'); toggleMobileMenu()" class="block w-full text-left text-crema hover:bg-cafe-oscuro px-3 py-2 rounded-lg font-medium">Inicio</button>
+            <button onclick="navigateTo('productos'); toggleMobileMenu()" class="block w-full text-left text-crema hover:bg-cafe-oscuro px-3 py-2 rounded-lg font-medium">Productos</button>
+            <button onclick="navigateTo('contacto'); toggleMobileMenu()" class="block w-full text-left text-crema hover:bg-cafe-oscuro px-3 py-2 rounded-lg font-medium">Contacto</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow">
+        
+        <!-- SECTION: INICIO -->
+        <section id="section-inicio" class="page-section">
+            <!-- Hero Banner -->
+            <div class="relative bg-cafe-oscuro text-white overflow-hidden py-20 lg:py-28">
+                <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#D7C4B7_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div class="space-y-6 text-center md:text-left">
+                            <span class="inline-block px-4 py-1.5 rounded-full bg-cafe-claro/20 text-cafe-claro text-sm font-semibold tracking-wider uppercase border border-cafe-claro/30">
+                                Cafetería & Pastelería Artesanal
+                            </span>
+                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold leading-tight text-crema">
+                                El arte del buen café en cada taza.
+                            </h1>
+                            <p class="text-crema/80 text-lg max-w-xl mx-auto md:mx-0 font-light">
+                                Granos seleccionados de los mejores orígenes, tostados a la perfección y acompañados con nuestros exquisitos postres horneados diariamente.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2">
+                                <button onclick="navigateTo('productos')" class="bg-cafe-claro text-cafe-oscuro px-8 py-3.5 rounded-full font-bold hover:bg-white transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                    Ver Menú de Productos
+                                </button>
+                                <button onclick="navigateTo('contacto')" class="border-2 border-cafe-claro text-crema px-8 py-3.5 rounded-full font-semibold hover:bg-cafe-claro hover:text-cafe-oscuro transition">
+                                    Visítanos
+                                </button>
+                            </div>
+                        </div>
+                        <div class="relative flex justify-center">
+                            <div class="relative w-full max-w-md aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-cafe-claro/20">
+                                <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80" alt="Café recién hecho" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-cafe-oscuro/60 via-transparent to-transparent"></div>
+                                <div class="absolute bottom-6 left-6 right-6 p-4 bg-cafe-oscuro/80 backdrop-blur-md rounded-xl border border-white/10 text-white">
+                                    <p class="font-serif italic text-cafe-claro">"El mejor aroma para comenzar tu día"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Destacados / Características -->
+            <div class="py-16 bg-crema">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="bg-white p-8 rounded-2xl shadow-sm border border-cafe-claro/30 text-center hover:shadow-md transition">
+                            <div class="w-16 h-16 mx-auto mb-6 bg-crema-suave text-cafe-oscuro rounded-full flex items-center justify-center text-2xl">
+                                <i class="fa-solid fa-mug-hot"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-serif mb-3 text-cafe-oscuro">Café de Especialidad</h3>
+                            <p class="text-cafe-medio/80 text-sm leading-relaxed">Selección de granos 100% arábica de origen ético, tostados artesanalmente por nuestros expertos.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl shadow-sm border border-cafe-claro/30 text-center hover:shadow-md transition">
+                            <div class="w-16 h-16 mx-auto mb-6 bg-crema-suave text-cafe-oscuro rounded-full flex items-center justify-center text-2xl">
+                                <i class="fa-solid fa-stroopwafel"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-serif mb-3 text-cafe-oscuro">Repostería Fresca</h3>
+                            <p class="text-cafe-medio/80 text-sm leading-relaxed">Pasteles, muffins y panes preparados todas las mañanas con ingredientes naturales y locales.</p>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl shadow-sm border border-cafe-claro/30 text-center hover:shadow-md transition">
+                            <div class="w-16 h-16 mx-auto mb-6 bg-crema-suave text-cafe-oscuro rounded-full flex items-center justify-center text-2xl">
+                                <i class="fa-solid fa-couch"></i>
+                            </div>
+                            <h3 class="text-xl font-bold font-serif mb-3 text-cafe-oscuro">Ambiente Acogedor</h3>
+                            <p class="text-cafe-medio/80 text-sm leading-relaxed">Un espacio diseñado para relajarte, trabajar o disfrutar de una cálida conversación.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seccion Populares Preview -->
+            <div class="py-16 bg-crema-suave border-t border-cafe-claro/20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                        <div>
+                            <span class="text-cafe-medio font-semibold tracking-wider text-sm uppercase">Recomendaciones</span>
+                            <h2 class="text-3xl sm:text-4xl font-serif font-bold text-cafe-oscuro mt-1">Los Favoritos de la Casa</h2>
+                        </div>
+                        <button onclick="navigateTo('productos')" class="mt-4 md:mt-0 text-cafe-oscuro font-bold hover:text-cafe-medio flex items-center gap-2 group">
+                            Ver todo el menú <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                        </button>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8" id="featured-products-container">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: PRODUCTOS -->
+        <section id="section-productos" class="page-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Header & Filters -->
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <h1 class="text-4xl font-serif font-bold text-cafe-oscuro mb-3">Nuestra Carta</h1>
+                    <p class="text-cafe-medio">Descubre nuestra variedad de cafés de especialidad, bebidas frías y repostería artesanal recién horneada.</p>
+                </div>
+
+                <!-- Category Filters -->
+                <div class="flex flex-wrap justify-center gap-2 mb-10" id="category-filters">
+                    <button onclick="filterProducts('todos')" class="filter-btn active bg-cafe-oscuro text-crema px-5 py-2 rounded-full font-medium text-sm transition">Todos</button>
+                    <button onclick="filterProducts('cafe')" class="filter-btn bg-white text-cafe-oscuro hover:bg-cafe-claro/30 border border-cafe-claro/40 px-5 py-2 rounded-full font-medium text-sm transition">Cafés Calientes</button>
+                    <button onclick="filterProducts('frios')" class="filter-btn bg-white text-cafe-oscuro hover:bg-cafe-claro/30 border border-cafe-claro/40 px-5 py-2 rounded-full font-medium text-sm transition">Bebidas Frías</button>
+                    <button onclick="filterProducts('postres')" class="filter-btn bg-white text-cafe-oscuro hover:bg-cafe-claro/30 border border-cafe-claro/40 px-5 py-2 rounded-full font-medium text-sm transition">Pasteles y Postres</button>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8" id="products-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: CONTACTAR -->
+        <section id="section-contacto" class="page-section hidden py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h1 class="text-4xl font-serif font-bold text-cafe-oscuro mb-3">Contacto & Visítanos</h1>
+                    <p class="text-cafe-medio">¿Tienes preguntas, sugerencias o deseas reservar para un evento? Escríbenos o visítanos en nuestro local.</p>
+                </div>
+
+                <div class="grid lg:grid-cols-12 gap-12">
+                    <!-- Contact Info & Hours -->
+                    <div class="lg:col-span-5 space-y-8">
+                        <div class="bg-cafe-oscuro text-crema p-8 rounded-2xl shadow-lg">
+                            <h3 class="text-2xl font-serif font-bold text-crema mb-6">Información de Contacto</h3>
+                            <div class="space-y-6">
+                                <div class="flex items-start gap-4">
+                                    <div class="p-3 bg-cafe-medio rounded-xl text-cafe-claro">
+                                        <i class="fa-solid fa-location-dot text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-cafe-claro text-sm">Dirección</h4>
+                                        <p class="text-crema/90 text-sm">Av. Principal de los Cafés 456, Ciudad</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="p-3 bg-cafe-medio rounded-xl text-cafe-claro">
+                                        <i class="fa-solid fa-phone text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-cafe-claro text-sm">Teléfono</h4>
+                                        <p class="text-crema/90 text-sm">+51 987 654 321</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="p-3 bg-cafe-medio rounded-xl text-cafe-claro">
+                                        <i class="fa-solid fa-envelope text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-cafe-claro text-sm">Correo Electrónico</h4>
+                                        <p class="text-crema/90 text-sm">contacto@sweetlifecafe.com</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="border-cafe-medio my-6">
+
+                            <h4 class="font-serif font-bold text-xl text-crema mb-4">Horarios de Atención</h4>
+                            <ul class="space-y-2 text-sm text-crema/90">
+                                <li class="flex justify-between"><span>Lunes a Viernes:</span> <span class="font-medium text-cafe-claro">7:00 AM - 9:00 PM</span></li>
+                                <li class="flex justify-between"><span>Sábados y Domingos:</span> <span class="font-medium text-cafe-claro">8:00 AM - 10:00 PM</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form -->
+                    <div class="lg:col-span-7 bg-white p-8 sm:p-10 rounded-2xl shadow-sm border border-cafe-claro/30">
+                        <h3 class="text-2xl font-serif font-bold text-cafe-oscuro mb-6">Enviarnos un Mensaje</h3>
+                        
+                        <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-5">
+                            <div class="grid sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label class="block text-sm font-semibold text-cafe-oscuro mb-2" for="nombre">Nombre Completo</label>
+                                    <input type="text" id="nombre" required class="w-full px-4 py-3 rounded-xl border border-cafe-claro/50 focus:outline-none focus:ring-2 focus:ring-cafe-oscuro bg-crema-suave/30 text-cafe-oscuro text-sm" placeholder="Tu nombre">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-cafe-oscuro mb-2" for="email">Correo Electrónico</label>
+                                    <input type="email" id="email" required class="w-full px-4 py-3 rounded-xl border border-cafe-claro/50 focus:outline-none focus:ring-2 focus:ring-cafe-oscuro bg-crema-suave/30 text-cafe-oscuro text-sm" placeholder="tu@email.com">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-cafe-oscuro mb-2" for="asunto">Asunto</label>
+                                <input type="text" id="asunto" required class="w-full px-4 py-3 rounded-xl border border-cafe-claro/50 focus:outline-none focus:ring-2 focus:ring-cafe-oscuro bg-crema-suave/30 text-cafe-oscuro text-sm" placeholder="Ej: Reserva de mesa / Evento">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-cafe-oscuro mb-2" for="mensaje">Mensaje</label>
+                                <textarea id="mensaje" rows="4" required class="w-full px-4 py-3 rounded-xl border border-cafe-claro/50 focus:outline-none focus:ring-2 focus:ring-cafe-oscuro bg-crema-suave/30 text-cafe-oscuro text-sm resize-none" placeholder="Escribe tu mensaje aquí..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-cafe-oscuro text-crema py-3.5 rounded-xl font-bold hover:bg-cafe-medio transition shadow-md">
+                                Enviar Mensaje
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SHOPPING CART MODAL / DRAWER -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+        <div class="absolute inset-0 bg-black/50 transition-opacity backdrop-blur-sm" onclick="toggleCart()"></div>
+
+        <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+            <div class="pointer-events-auto w-screen max-w-md bg-crema shadow-2xl flex flex-col">
+                <!-- Cart Header -->
+                <div class="p-6 bg-cafe-oscuro text-white flex items-center justify-between">
+                    <h2 class="text-xl font-serif font-bold text-crema flex items-center gap-2">
+                        <i class="fa-solid fa-basket-shopping"></i> Tu Pedido
+                    </h2>
+                    <button onclick="toggleCart()" class="text-crema/80 hover:text-white text-xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Items List -->
+                <div class="flex-1 overflow-y-auto p-6 space-y-4" id="cart-items">
+                    <!-- Populated dynamically by JS -->
+                </div>
+
+                <!-- Cart Footer -->
+                <div class="p-6 bg-white border-t border-cafe-claro/30 space-y-4">
+                    <div class="flex justify-between items-center text-lg font-bold text-cafe-oscuro">
+                        <span>Total:</span>
+                        <span id="cart-total">$0.00</span>
+                    </div>
+                    <button onclick="checkout()" class="w-full bg-cafe-oscuro text-crema py-3.5 rounded-xl font-bold hover:bg-cafe-medio transition shadow-md flex items-center justify-center gap-2">
+                        <span>Confirmar Pedido</span>
+                        <i class="fa-solid fa-arrow-right text-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-cafe-oscuro text-crema px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 z-50 border border-cafe-claro/30">
+        <i class="fa-solid fa-circle-check text-cafe-claro text-lg"></i>
+        <span id="toast-message" class="text-sm font-medium">Notificación</span>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-cafe-oscuro text-crema border-t border-cafe-medio">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="space-y-4 md:col-span-1">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-cafe-claro flex items-center justify-center text-cafe-oscuro font-bold">
+                            <i class="fa-solid fa-coffee"></i>
+                        </div>
+                        <span class="font-serif text-xl font-bold text-crema">Sweet Life</span>
+                    </div>
+                    <p class="text-crema/70 text-xs leading-relaxed">
+                        Pasión por el café de alta calidad y la repostería fina. Ven y vive la experiencia Sweet Life.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-serif font-bold text-cafe-claro mb-3 text-sm">Navegación</h4>
+                    <ul class="space-y-2 text-xs text-crema/80">
+                        <li><button onclick="navigateTo('inicio')" class="hover:text-cafe-claro transition">Inicio</button></li>
+                        <li><button onclick="navigateTo('productos')" class="hover:text-cafe-claro transition">Productos</button></li>
+                        <li><button onclick="navigateTo('contacto')" class="hover:text-cafe-claro transition">Contacto</button></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-serif font-bold text-cafe-claro mb-3 text-sm">Especialidades</h4>
+                    <ul class="space-y-2 text-xs text-crema/80">
+                        <li>Espresso Italiano</li>
+                        <li>Cappuccino de Avellana</li>
+                        <li>Cheesecake de Frutos Rojos</li>
+                        <li>Tarta de Café</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-serif font-bold text-cafe-claro mb-3 text-sm">Síguenos</h4>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-8 h-8 rounded-full bg-cafe-medio flex items-center justify-center text-crema hover:bg-cafe-claro hover:text-cafe-oscuro transition"><i class="fa-brands fa-instagram text-sm"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-cafe-medio flex items-center justify-center text-crema hover:bg-cafe-claro hover:text-cafe-oscuro transition"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-cafe-medio flex items-center justify-center text-crema hover:bg-cafe-claro hover:text-cafe-oscuro transition"><i class="fa-brands fa-twitter text-sm"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-cafe-medio/50 text-center text-xs text-crema/50">
+                <p>&copy; 2026 Sweet Life Coffee & Cakes. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // DATA: Products Catalog
+        const products = [
+            {
+                id: 1,
+                name: "Espresso Doble",
+                category: "cafe",
+                price: 3.50,
+                description: "Café denso y concentrado con una capa crema dorada perfecta.",
+                image: "https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?auto=format&fit=crop&w=600&q=80",
+                featured: true
+            },
+            {
+                id: 2,
+                name: "Cappuccino Italiano",
+                category: "cafe",
+                price: 4.50,
+                description: "Espresso, leche vaporizada y abundante espuma de leche suave.",
+                image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&w=600&q=80",
+                featured: true
+            },
+            {
+                id: 3,
+                name: "Iced Caramel Macchiato",
+                category: "frios",
+                price: 5.20,
+                description: "Espresso frío sobre leche con hielo y jarabe de caramelo artesanal.",
+                image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=600&q=80",
+                featured: true
+            },
+            {
+                id: 4,
+                name: "Coffee Cake de Especialidad",
+                category: "postres",
+                price: 4.80,
+                description: "Tarta esponjosa con infusión de café y cobertura de crema nuez.",
+                image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80",
+                featured: true
+            },
+            {
+                id: 5,
+                name: "Cheesecake de Frutos Rojos",
+                category: "postres",
+                price: 5.50,
+                description: "Cremoso pastel de queso sobre galleta con mermelada de frutos del bosque.",
+                image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=600&q=80",
+                featured: true
+            },
+            {
+                id: 6,
+                name: "Cold Brew Artesanal",
+                category: "frios",
+                price: 4.90,
+                description: "Café extraído lentamente en agua fría durante 18 horas.",
+                image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=600&q=80",
+                featured: false
+            },
+            {
+                id: 7,
+                name: "Muffin de Arándanos",
+                category: "postres",
+                price: 3.20,
+                description: "Muffin suave horneado diariamente con arándanos frescos orgánicos.",
+                image: "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?auto=format&fit=crop&w=600&q=80",
+                featured: false
+            },
+            {
+                id: 8,
+                name: "Mocha con Chocolate Oscuro",
+                category: "cafe",
+                price: 4.90,
+                description: "Mezcla rica de espresso, chocolate amargo 70% y leche cremosa.",
+                image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=600&q=80",
+                featured: false
+            }
+        ];
+
+        // STATE MANAGEMENT
+        let cart = [];
+
+        // RENDER FUNCTIONS
+        window.onload = function() {
+            renderFeaturedProducts();
+            renderProductsGrid(products);
+            updateCartUI();
+            updateActiveNav('inicio');
+        };
+
+        // Navigation Switcher
+        function navigateTo(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            // Show selected section
+            const activeSection = document.getElementById(`section-${sectionId}`);
+            if (activeSection) {
+                activeSection.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            updateActiveNav(sectionId);
+        }
+
+        function updateActiveNav(activeId) {
+            document.querySelectorAll('.nav-link').forEach(btn => {
+                btn.classList.remove('text-cafe-claro', 'border-cafe-claro');
+                btn.classList.add('border-transparent');
+            });
+
+            const activeBtn = document.getElementById(`nav-${activeId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('text-cafe-claro', 'border-cafe-claro');
+                activeBtn.classList.remove('border-transparent');
+            }
+        }
+
+        // Render Featured Items (For Home Page)
+        function renderFeaturedProducts() {
+            const container = document.getElementById('featured-products-container');
+            const featured = products.filter(p => p.featured).slice(0, 3);
+            
+            container.innerHTML = featured.map(product => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition border border-cafe-claro/30 flex flex-col justify-between">
+                    <div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                            <span class="absolute top-3 right-3 bg-cafe-oscuro/80 text-crema text-xs font-bold px-3 py-1 rounded-full backdrop-blur-sm">
+                                $${product.price.toFixed(2)}
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-serif font-bold text-cafe-oscuro mb-2">${product.name}</h3>
+                            <p class="text-cafe-medio/80 text-sm mb-4">${product.description}</p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="addToCart(${product.id})" class="w-full bg-cafe-oscuro text-crema py-2.5 rounded-xl font-semibold hover:bg-cafe-medio transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus text-xs"></i> Agregar al Pedido
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render All Products with Optional Category Filter
+        function renderProductsGrid(items) {
+            const container = document.getElementById('products-grid');
+            if (items.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-12 text-cafe-medio">No se encontraron productos en esta categoría.</div>`;
+                return;
+            }
+
+            container.innerHTML = items.map(product => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition border border-cafe-claro/30 flex flex-col justify-between">
+                    <div>
+                        <div class="h-52 overflow-hidden relative">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                            <span class="absolute top-3 right-3 bg-cafe-oscuro/80 text-crema text-xs font-bold px-3 py-1 rounded-full backdrop-blur-sm">
+                                $${product.price.toFixed(2)}
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-serif font-bold text-cafe-oscuro mb-2">${product.name}</h3>
+                            <p class="text-cafe-medio/80 text-sm mb-4 leading-relaxed">${product.description}</p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="addToCart(${product.id})" class="w-full bg-cafe-oscuro text-crema py-2.5 rounded-xl font-semibold hover:bg-cafe-medio transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus text-xs"></i> Agregar al Pedido
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter Products Handler
+        function filterProducts(category) {
+            // Button Styles Toggle
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-cafe-oscuro', 'text-crema');
+                btn.classList.add('bg-white', 'text-cafe-oscuro');
+            });
+            event.currentTarget.classList.remove('bg-white', 'text-cafe-oscuro');
+            event.currentTarget.classList.add('bg-cafe-oscuro', 'text-crema');
+
+            if (category === 'todos') {
+                renderProductsGrid(products);
+            } else {
+                const filtered = products.filter(p => p.category === category);
+                renderProductsGrid(filtered);
+            }
+        }
+
+        // CART LOGIC
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existing = cart.find(item => item.id === productId);
+
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCartUI();
+            showToast(`"${product.name}" se agregó al carrito`);
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== productId);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartBadge = document.getElementById('cart-badge');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+
+            // Total count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            if (totalItems > 0) {
+                cartBadge.innerText = totalItems;
+                cartBadge.classList.remove('hidden');
+            } else {
+                cartBadge.classList.add('hidden');
+            }
+
+            // Cart Items Render
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center py-12 text-cafe-medio/70">
+                        <i class="fa-solid fa-mug-saucer text-4xl mb-3 block"></i>
+                        <p class="font-medium">Tu carrito está vacío</p>
+                    </div>
+                `;
+            } else {
+                cartItemsContainer.innerHTML = cart.map(item => `
+                    <div class="flex items-center justify-between gap-4 p-3 bg-white rounded-xl border border-cafe-claro/30 shadow-sm">
+                        <img src="${item.image}" alt="${item.name}" class="w-14 h-14 object-cover rounded-lg">
+                        <div class="flex-1">
+                            <h4 class="font-serif font-bold text-cafe-oscuro text-sm">${item.name}</h4>
+                            <p class="text-xs text-cafe-medio">$${item.price.toFixed(2)} c/u</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="w-7 h-7 bg-crema-suave rounded-md text-cafe-oscuro flex items-center justify-center font-bold hover:bg-cafe-claro/50 text-xs">-</button>
+                            <span class="text-sm font-bold w-4 text-center">${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)" class="w-7 h-7 bg-crema-suave rounded-md text-cafe-oscuro flex items-center justify-center font-bold hover:bg-cafe-claro/50 text-xs">+</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Total Calculation
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.innerText = `$${total.toFixed(2)}`;
+        }
+
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showToast("Tu carrito está vacío");
+                return;
+            }
+            showToast("¡Gracias por tu pedido! Te avisaremos cuando esté listo.");
+            cart = [];
+            updateCartUI();
+            toggleCart();
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Contact Form Submission Handler
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('nombre').value;
+            showToast(`¡Gracias ${name}! Hemos recibido tu mensaje.`);
+            document.getElementById('contact-form').reset();
+        }
+
+        // Toast Notification Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            
+            toastMsg.innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
